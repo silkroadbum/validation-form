@@ -60,9 +60,12 @@ function Form() {
         id="message"
         placeholder="Введите сообщение"
         required></textarea>
-      <button className="button" type="submit">
-        Отправить
-      </button>
+      <div className="form__bottom-block">
+        <span className="form__text">*-обязательные поля</span>
+        <button className="button" type="submit">
+          Отправить
+        </button>
+      </div>
     </form>
   );
 }
