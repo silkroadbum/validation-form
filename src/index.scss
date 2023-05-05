@@ -19,6 +19,9 @@ body {
 .header {
   text-align: center;
   padding: 0 20px;
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
 }
 
 .header__title {
@@ -31,6 +34,22 @@ body {
 
 .main {
   padding: 0 20px;
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
+}
+
+.form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form__top-block {
+  @media (min-width: 650px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 }
 
 .form__label {
