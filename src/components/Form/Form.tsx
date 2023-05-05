@@ -30,7 +30,9 @@ function Form() {
         Категория сообщения:*
       </label>
       <select className="form__input" name="category" id="category" defaultValue="" required>
-        <option value="">Выберите категорию</option>
+        <option value="" disabled>
+          Выберите категорию
+        </option>
         <option value="technical">Техническая поддержка</option>
         <option value="payment">Оплата и доставка</option>
         <option value="warranty">Возврат и гарантия</option>

@@ -23,6 +23,10 @@ body {
 
 .header__title {
   font-size: 24px;
+  text-transform: uppercase;
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
 }
 
 .main {
