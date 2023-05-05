@@ -66,3 +66,23 @@ body {
 .form__input:focus {
   background-color: #dbd9d9;
 }
+
+.button {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #76b7ec;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+}
+
+.button:hover {
+  background-color: #68a9de;
+}
+
+.button:active {
+  background-color: #609dcf;
+}

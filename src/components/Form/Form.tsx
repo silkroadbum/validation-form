@@ -46,6 +46,9 @@ function Form() {
         id="message"
         placeholder="Введите сообщение"
         required></textarea>
+      <button className="button" type="submit">
+        Отправить
+      </button>
     </form>
   );
 }
