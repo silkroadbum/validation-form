@@ -94,6 +94,10 @@ body {
   text-transform: uppercase;
 }
 
+.form__file-name {
+  text-align: center;
+}
+
 .form__input {
   font-family: inherit;
   font-size: 16px;
@@ -153,7 +157,6 @@ body {
   &--input-file {
     background-color: transparent;
     border: 3px solid #76b7ec;
-    border-radius: 3px;
     &:hover {
       background-color: #76b7ec;
       color: #ffffff;

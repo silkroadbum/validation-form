@@ -9,6 +9,7 @@ function Form() {
     category: '',
     image: '',
   });
+  const [fileName, setFileName] = useState('');
   const inputFileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -27,6 +28,7 @@ function Form() {
     const file = evt.target.files && evt.target.files[0];
     if (file) {
       setFormData((prevState) => ({ ...prevState, image: file.name }));
+      setFileName(file.name);
     }
   };
 
@@ -35,6 +37,7 @@ function Form() {
     console.log(JSON.stringify(formData));
     if (formRef.current) {
       formRef.current.reset();
+      setFileName('');
     }
   };
 
@@ -121,6 +124,7 @@ function Form() {
         <button className="button button--input-file" onClick={handlePickFile} type="button">
           Выберите файл
         </button>
+        <p className="form__file-name">{fileName ? fileName : 'Файл не выбран'}</p>
         <input
           className="form__input-file visually-hidden"
           ref={inputFileRef}
