@@ -1,6 +1,16 @@
+import { useRef } from 'react';
+
 function Form() {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const handlePickFile = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
   return (
-    <form className="form">
+    <form className="form" method="post" encType="multipart/form-data">
       <div className="form__top-block">
         <div className="form__left-block">
           <label className="form__label" htmlFor="name">
@@ -60,9 +70,25 @@ function Form() {
         id="message"
         placeholder="Введите сообщение"
         required></textarea>
+      <div className="form__file-block">
+        <label className="form__label" htmlFor="image">
+          Выберите изображение (JPG,PNG):
+        </label>
+        <button className="button button--input-file" onClick={handlePickFile} type="button">
+          Выберите файл
+        </button>
+        <input
+          className="form__input-file visually-hidden"
+          ref={inputFileRef}
+          type="file"
+          name="image"
+          id="image"
+          accept="image/jpg, image/png"
+        />
+      </div>
       <div className="form__bottom-block">
         <span className="form__text">*-обязательные поля</span>
-        <button className="button" type="submit">
+        <button className="button button--submit" type="submit">
           Отправить
         </button>
       </div>
