@@ -1,9 +1,16 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { InputFormTypes } from '../../types/types';
 
 function Form() {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    category: '',
+    image: '',
+  });
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handlePickFile = () => {
     if (inputFileRef.current) {
@@ -13,12 +20,31 @@ function Form() {
 
   const handleInput = (evt: InputFormTypes) => {
     const { name, value } = evt.target;
-    setFormData({ ...formData, [name]: value });
-    console.log(formData);
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleFileInput = (evt: ChangeEvent<HTMLInputElement>) => {
+    const file = evt.target.files && evt.target.files[0];
+    if (file) {
+      setFormData((prevState) => ({ ...prevState, image: file.name }));
+    }
+  };
+
+  const onSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    console.log(JSON.stringify(formData));
+    if (formRef.current) {
+      formRef.current.reset();
+    }
   };
 
   return (
-    <form className="form" method="post" encType="multipart/form-data">
+    <form
+      className="form"
+      ref={formRef}
+      method="post"
+      encType="multipart/form-data"
+      onSubmit={onSubmitForm}>
       <div className="form__top-block">
         <div className="form__left-block">
           <label className="form__label" htmlFor="name">
@@ -98,6 +124,7 @@ function Form() {
         <input
           className="form__input-file visually-hidden"
           ref={inputFileRef}
+          onChange={handleFileInput}
           type="file"
           name="image"
           id="image"
