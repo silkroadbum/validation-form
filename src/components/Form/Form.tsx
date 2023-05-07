@@ -15,9 +15,7 @@ function Form() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const handlePickFile = () => {
-    if (inputFileRef.current) {
-      inputFileRef.current.click();
-    }
+    inputFileRef.current?.click();
   };
 
   const handleInput = (evt: InputFormTypes) => {
@@ -42,11 +40,9 @@ function Form() {
   const onSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     console.log(JSON.stringify(formData));
-    if (formRef.current) {
-      formRef.current.reset();
-      setFileName('');
-      setFileSize(0);
-    }
+    setFileName('');
+    setFileSize(0);
+    formRef.current?.reset();
   };
 
   return (
