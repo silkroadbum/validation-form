@@ -1,12 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { InputFormTypes } from '../../types/types';
 
 function Form() {
+  const [formData, setFormData] = useState({});
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handlePickFile = () => {
     if (inputFileRef.current) {
       inputFileRef.current.click();
     }
+  };
+
+  const handleInput = (evt: InputFormTypes) => {
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   return (
@@ -18,6 +26,7 @@ function Form() {
           </label>
           <input
             className="form__input"
+            onChange={handleInput}
             type="text"
             name="name"
             id="name"
@@ -28,6 +37,7 @@ function Form() {
           </label>
           <input
             className="form__input"
+            onChange={handleInput}
             type="text"
             name="surname"
             id="surname"
@@ -40,6 +50,7 @@ function Form() {
           </label>
           <input
             className="form__input"
+            onChange={handleInput}
             type="text"
             name="email"
             id="email"
@@ -49,7 +60,13 @@ function Form() {
           <label className="form__label" htmlFor="category">
             Категория сообщения:*
           </label>
-          <select className="form__input" name="category" id="category" defaultValue="" required>
+          <select
+            className="form__input"
+            onChange={handleInput}
+            name="category"
+            id="category"
+            defaultValue=""
+            required>
             <option value="" disabled>
               Выберите категорию
             </option>
@@ -66,6 +83,7 @@ function Form() {
       </label>
       <textarea
         className="form__input form__input--message"
+        onChange={handleInput}
         name="message"
         id="message"
         placeholder="Введите сообщение"
