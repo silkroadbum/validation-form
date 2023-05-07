@@ -1,5 +1,11 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { InputFormTypes } from '../../types/types';
+import {
+  checkNameSurnameFields,
+  checkEmailFields,
+  checkCategoryField,
+  checkMessageFiled,
+} from '../../utils';
 
 function Form() {
   const [formData, setFormData] = useState({
@@ -20,6 +26,21 @@ function Form() {
 
   const handleInput = (evt: InputFormTypes) => {
     const { name, value } = evt.target;
+    if (name === 'name') {
+      console.log(checkNameSurnameFields(value, formData.surname));
+    }
+    if (name === 'surname') {
+      console.log(checkNameSurnameFields(formData.name, value));
+    }
+    if (name === 'email') {
+      console.log(checkEmailFields(value));
+    }
+    if (name === 'category') {
+      console.log(checkCategoryField(value));
+    }
+    if (name === 'message') {
+      console.log(checkMessageFiled(value));
+    }
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
