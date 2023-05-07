@@ -10,6 +10,7 @@ function Form() {
     image: '',
   });
   const [fileName, setFileName] = useState('');
+  const [fileSize, setFileSize] = useState(0);
   const inputFileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -26,9 +27,15 @@ function Form() {
 
   const handleFileInput = (evt: ChangeEvent<HTMLInputElement>) => {
     const file = evt.target.files && evt.target.files[0];
-    if (file) {
+    if (file && Math.ceil(file.size / 1024) < 2048) {
       setFormData((prevState) => ({ ...prevState, image: file.name }));
       setFileName(file.name);
+      setFileSize(file.size);
+    } else if (file && Math.ceil(file.size / 1024) > 2048) {
+      alert('Размер файла не может быть больше 2 МБ');
+      setFileName('');
+      setFileSize(0);
+      setFormData((prevState) => ({ ...prevState, image: '' }));
     }
   };
 
@@ -38,6 +45,7 @@ function Form() {
     if (formRef.current) {
       formRef.current.reset();
       setFileName('');
+      setFileSize(0);
     }
   };
 
@@ -116,6 +124,7 @@ function Form() {
         name="message"
         id="message"
         placeholder="Введите сообщение"
+        minLength={10}
         required></textarea>
       <div className="form__file-block">
         <label className="form__label" htmlFor="image">
@@ -124,7 +133,10 @@ function Form() {
         <button className="button button--input-file" onClick={handlePickFile} type="button">
           Выберите файл
         </button>
-        <p className="form__file-name">{fileName ? fileName : 'Файл не выбран'}</p>
+        <p className="form__file-name">
+          {fileName ? fileName : 'Файл не выбран'}
+          {fileSize ? ` - ${Math.ceil(fileSize / 1024)} КБ` : ''}
+        </p>
         <input
           className="form__input-file visually-hidden"
           ref={inputFileRef}
