@@ -167,3 +167,11 @@ body {
     }
   }
 }
+
+.button:disabled {
+  background-color: rgb(172, 170, 170);
+  cursor: not-allowed;
+  &:hover {
+    background-color: rgb(172, 170, 170);
+  }
+}

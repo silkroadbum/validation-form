@@ -1,10 +1,11 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState, useEffect } from 'react';
 import { InputFormTypes } from '../../types/types';
 import {
   checkNameSurnameFields,
   checkEmailFields,
   checkCategoryField,
   checkMessageFiled,
+  checkForm,
 } from '../../utils';
 
 function Form() {
@@ -13,12 +14,24 @@ function Form() {
     surname: '',
     email: '',
     category: '',
+    message: '',
     image: '',
   });
   const [fileName, setFileName] = useState('');
   const [fileSize, setFileSize] = useState(0);
+  const [validFields, setValidFields] = useState({
+    name: false,
+    email: false,
+    category: false,
+    message: false,
+  });
+  const [validForm, setValidForm] = useState(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setValidForm(checkForm(validFields));
+  }, [validFields]);
 
   const handlePickFile = () => {
     inputFileRef.current?.click();
@@ -27,19 +40,24 @@ function Form() {
   const handleInput = (evt: InputFormTypes) => {
     const { name, value } = evt.target;
     if (name === 'name') {
-      console.log(checkNameSurnameFields(value, formData.surname));
+      const isValidName = checkNameSurnameFields(value, formData.surname);
+      setValidFields((prev) => ({ ...prev, name: isValidName }));
     }
     if (name === 'surname') {
-      console.log(checkNameSurnameFields(formData.name, value));
+      const isValidName = checkNameSurnameFields(formData.name, value);
+      setValidFields((prev) => ({ ...prev, name: isValidName }));
     }
     if (name === 'email') {
-      console.log(checkEmailFields(value));
+      const isValidEmail = checkEmailFields(value);
+      setValidFields((prev) => ({ ...prev, [name]: isValidEmail }));
     }
     if (name === 'category') {
-      console.log(checkCategoryField(value));
+      const isValidCategory = checkCategoryField(value);
+      setValidFields((prev) => ({ ...prev, [name]: isValidCategory }));
     }
     if (name === 'message') {
-      console.log(checkMessageFiled(value));
+      const isValidMessage = checkMessageFiled(value);
+      setValidFields((prev) => ({ ...prev, [name]: isValidMessage }));
     }
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -68,7 +86,7 @@ function Form() {
 
   return (
     <form
-      className="form"
+      className={`form ${validForm ? '' : 'form--error'}`}
       ref={formRef}
       method="post"
       encType="multipart/form-data"
@@ -166,7 +184,7 @@ function Form() {
       </div>
       <div className="form__bottom-block">
         <span className="form__text">*-обязательные поля</span>
-        <button className="button button--submit" type="submit">
+        <button className="button button--submit" type="submit" disabled={!validForm}>
           Отправить
         </button>
       </div>
