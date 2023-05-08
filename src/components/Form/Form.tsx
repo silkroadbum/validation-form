@@ -93,94 +93,104 @@ function Form() {
       onSubmit={onSubmitForm}>
       <div className="form__top-block">
         <div className="form__left-block">
-          <label className="form__label" htmlFor="name">
+          <label className="form__label">
             Имя:
+            <input
+              className={`form__input ${validFields.name ? '' : 'form__input--error'}`}
+              onChange={handleInput}
+              type="text"
+              name="name"
+              placeholder="Введите имя"
+            />
+            <span className="form__input-signature">
+              Поле Имя или Фамилия должны быть заполнены
+            </span>
           </label>
-          <input
-            className="form__input"
-            onChange={handleInput}
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Введите имя"
-          />
-          <label className="form__label" htmlFor="surname">
+
+          <label className="form__label">
             Фамилия:
+            <input
+              className={`form__input ${validFields.name ? '' : 'form__input--error'}`}
+              onChange={handleInput}
+              type="text"
+              name="surname"
+              placeholder="Введите фамилию"
+            />
+            <span className="form__input-signature">
+              Поле Имя или Фамилия должны быть заполнены
+            </span>
           </label>
-          <input
-            className="form__input"
-            onChange={handleInput}
-            type="text"
-            name="surname"
-            id="surname"
-            placeholder="Введите фамилию"
-          />
         </div>
         <div className="form__right-block">
-          <label className="form__label" htmlFor="email">
+          <label className="form__label">
             Email:*
+            <input
+              className={`form__input ${validFields.email ? '' : 'form__input--error'}`}
+              onChange={handleInput}
+              type="text"
+              name="email"
+              required
+              placeholder="Введите email"
+            />
+            <span className="form__input-signature">Поле email должно быть заполнено</span>
           </label>
-          <input
-            className="form__input"
-            onChange={handleInput}
-            type="text"
-            name="email"
-            id="email"
-            required
-            placeholder="Введите email"
-          />
-          <label className="form__label" htmlFor="category">
+
+          <label className="form__label">
             Категория сообщения:*
+            <select
+              className={`form__input ${validFields.category ? '' : 'form__input--error'}`}
+              onChange={handleInput}
+              name="category"
+              defaultValue=""
+              required>
+              <option value="" disabled>
+                Выберите категорию
+              </option>
+              <option value="technical">Техническая поддержка</option>
+              <option value="payment">Оплата и доставка</option>
+              <option value="warranty">Возврат и гарантия</option>
+              <option value="reviews">Предложения и отзывы</option>
+              <option value="advertising">Рекламные запросы</option>
+            </select>
+            <span className="form__input-signature">Обязательное поле, выберите категорию</span>
           </label>
-          <select
-            className="form__input"
-            onChange={handleInput}
-            name="category"
-            id="category"
-            defaultValue=""
-            required>
-            <option value="" disabled>
-              Выберите категорию
-            </option>
-            <option value="technical">Техническая поддержка</option>
-            <option value="payment">Оплата и доставка</option>
-            <option value="warranty">Возврат и гарантия</option>
-            <option value="reviews">Предложения и отзывы</option>
-            <option value="advertising">Рекламные запросы</option>
-          </select>
         </div>
       </div>
       <label className="form__label" htmlFor="message">
         Сообщение:*
+        <textarea
+          className={`form__input form__input--message ${
+            validFields.message ? '' : 'form__input--error'
+          }`}
+          onChange={handleInput}
+          name="message"
+          id="message"
+          placeholder="Введите сообщение"
+          minLength={10}
+          required></textarea>
+        <span className="form__input-signature">Обязательное поле, минимум 10 символов</span>
       </label>
-      <textarea
-        className="form__input form__input--message"
-        onChange={handleInput}
-        name="message"
-        id="message"
-        placeholder="Введите сообщение"
-        minLength={10}
-        required></textarea>
+
       <div className="form__file-block">
         <label className="form__label" htmlFor="image">
           Выберите изображение (JPG,PNG):
+          <button className="button button--input-file" onClick={handlePickFile} type="button">
+            Выберите файл
+          </button>
+          <p className="form__file-name">
+            {fileName ? fileName : 'Файл не выбран'}
+            {fileSize ? ` - ${Math.ceil(fileSize / 1024)} КБ` : ''}
+          </p>
+          <input
+            className="form__input-file visually-hidden"
+            ref={inputFileRef}
+            onChange={handleFileInput}
+            type="file"
+            name="image"
+            id="image"
+            accept="image/jpg, image/png"
+          />
         </label>
-        <button className="button button--input-file" onClick={handlePickFile} type="button">
-          Выберите файл
-        </button>
-        <p className="form__file-name">
-          {fileName ? fileName : 'Файл не выбран'}
-          {fileSize ? ` - ${Math.ceil(fileSize / 1024)} КБ` : ''}
-        </p>
-        <input
-          className="form__input-file visually-hidden"
-          ref={inputFileRef}
-          onChange={handleFileInput}
-          type="file"
-          name="image"
-          id="image"
-          accept="image/jpg, image/png"
-        />
       </div>
       <div className="form__bottom-block">
         <span className="form__text">*-обязательные поля</span>
